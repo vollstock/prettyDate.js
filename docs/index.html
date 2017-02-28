@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <title>Test Pretty Date</title>
+    <meta charset="utf-8">
+    <style type="text/css">
+
+        body {
+            font-family: Georgia, serif;
+            font-size: 18px;
+            line-height: 1.5em;
+            background-color: #abd1da;
+            padding: 4em 1em;
+            margin: 0 auto;
+            max-width: 800px;
+        }
+        h2 {
+            margin: 2em 0 1em 0;
+            color: #266ea4;
+            font-family: sans-serif;
+            font-weight: lighter;
+            font-size: 1.5em;
+        }
+        table {
+            text-align: left;
+            border-collapse: collapse;
+            background-color: #fffc;
+            width: 100%;
+        }
+        tr:nth-child(2n) {
+            background-color: #fff;
+        }
+        td, th {
+            padding: 0.75em 1em;
+        }
+        th {
+            border-bottom: 1px solid #666;
+        }
+        td {
+            border-bottom: 1px solid #CFCFCF;
+        }
+        .pretty {
+            font-weight: bold;
+            color: #c82e59;
+        }
+        .source {
+            background-color: white;
+            display: block;
+            margin: 2em 0;
+            white-space: pre;
+        }
+        .comment {
+            color: #BCA160;
+        }
+        .keyword {
+            color: #ff0036;
+        }
+        .function {
+            color: #06f;
+        }
+        .string {
+            color: #03d131;;
+        }
+    </style>
+</head>
+<body>
+    <h1>PrettyDate.js</h1>
+
+    <p>A small helper function to beautify dates in Javascript.</p>
+
+    <h2>Usage</h2>
+
+    <p>
+    Pretty date only has one function: <code>prettyDate(date)</code>. It feeds 
+    the input date into a <a href="https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Date">Javascript Date object</a> and all the same input formats, the Date object does.<br/>
+    It returns a pretty string.
+    </p>
+
+    </p>Include it to your doc</p>
+
+    <code class="source">
+    &lt;<span class="keyword">script</span> src=<span class="string">"prettyDate.min.js"</span>&gt;&lt;<span class="keyword">script</span>&gt;
+    </code>
+
+Then simply prettify your javascript dates
+    <code class="source">
+    prettyDate(<span class="keyword">new</span> <span class="function">Date</span>());   <span class="comment">// --> "Just now"</span>
+    prettyDate(<span class="string">"1979-08-31"</span>); <span class="comment">// --> "Aug 31st 1979"</span>
+    </code>
+
+    <h2>Examples</h2>
+
+    <table id="test-table">
+        <thead>
+            <tr>
+                <th>Description</th>
+                <th>Input Date</th>
+                <th>Output</th>
+            </tr>
+        </thead>
+    </table>
+    
+    <script
+        src="https://code.jquery.com/jquery-3.1.1.slim.min.js"
+        integrity="sha256-/SIrNqv8h6QGKDuNoLGA4iret+kyesCkHGzVUUV0shc="
+        crossorigin="anonymous"></script>
+    <script src="prettyDate.js"></script>
+
+    <script type="text/javascript">
+
+        // calculate time from now
+        function dateFromNow(minutes, hours, days, years) {
+            var time = new Date().getTime();
+            time += minutes * ONE_MINUTE;
+            time += hours * ONE_HOUR;
+            time += days * ONE_DAY;
+            time += years * ONE_YEAR;
+            return new Date(time);
+        };
+
+        var now = new Date();
+
+        // tests
+        var tests = [{
+            description: 'More then a year ago',
+            input: dateFromNow(0, 0, -2, -1)
+        }, {
+            description: 'More then 1 week ago',
+            input: dateFromNow(0, 0, -9, 0)
+        }, {
+            description: 'Last week',
+            input: dateFromNow(0, -3, -2, 0)
+        }, {
+            description: 'More then 1 day',
+            input: dateFromNow(0, -3, -1, 0)
+        }, {
+            description: 'Less then 5 hours',
+            input: dateFromNow(-30, -3, 0, 0)
+        }, {
+            description: 'Less then one hour ago',
+            input: dateFromNow(-13, 0, 0, 0)
+        }, {
+            description: 'Now',
+            input: new Date()
+        }, {
+            description: 'In less then an hour',
+            input: dateFromNow(+30, 0, 0, 0)
+        }, {
+            description: 'In less then 5 hours',
+            input: dateFromNow(+14, +3, 0, 0)
+        }, {
+            description: 'In less then a day',
+            input: dateFromNow(0, +6, 0, 0)
+        }, {
+            description: 'In less then a week',
+            input: dateFromNow(0, +6, +3, 0)
+        }, {
+            description: 'In less then a year',
+            input: dateFromNow(0, 0, +35, 0)
+        }, {
+            description: 'In more then a year',
+            input: dateFromNow(0, 0, 0, +10)
+        }];
+
+        // print all results
+        for (i = 0; i < tests.length; i++) {
+            $('#test-table').append(
+                '<tr>\
+                    <td>' + tests[i].description + '</td>\
+                    <td><code>' + tests[i].input.toLocaleString() + '</code></td>\
+                    <td class="pretty">' + prettyDate(tests[i].input) + '</td>\
+                </tr>'
+            );
+        }
+
+    </script>
+</body>
+</html>

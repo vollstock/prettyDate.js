@@ -22,6 +22,8 @@ prettyDate(new Date());   // --> "Just now"
 prettyDate("1979-08-31"); // --> "Aug 31st 1979"
 ```
 
+[Here are some examples](https://vollstock.github.io/prettyDate.js/) of output.
+
 ## License
 
 It’s [Beerware](https://en.wikipedia.org/wiki/Beerware).
